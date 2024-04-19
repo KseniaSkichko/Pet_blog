@@ -1,6 +1,18 @@
 from django import forms
-from .models import TypePost, TagPosts
+from django.views.generic import UpdateView
+
+from .models import TypePost, TagPosts, Material
 
 
-class NuwPostForm(forms.Form):
-    pass
+
+# фформа-шаблон для создания нового поста
+class NuwMaterialForm(forms.Form):
+    class Meta:
+        model = Material
+        fields = ['typepost', 'title', 'slug', 'photo', 'content', 'tags', 'publication']
+        labels = {'slug': 'URL'}
+
+
+
+
+

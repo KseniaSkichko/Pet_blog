@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse, reverse_lazy
 
 
 #Проверяем опубликовано или приватно
@@ -6,7 +7,10 @@ class PublicationManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(publication=Material.Publiks.PRIVAT)
 
-#Модель описывает публикации(контент
+
+
+
+#Модель описывает публикации (контент)
 class Material(models.Model):
     class Publiks(models.IntegerChoices):
         PRIVAT = 0, 'Приватно'
@@ -31,11 +35,13 @@ class Material(models.Model):
     def __str__(self):
         return self.title
 
- #   def get_absolute_url(self):
+    def get_absolute_url(self):
+        return reverse_lazy('material', kwargs={'material_slug': self.slug})
 
 
 
-#Сортируем по времени публикации (свежие записи-время больше находятся выше)
+
+#Сортируем по времени публикации, назначаем имя для админ панели
     class Meta:
         verbose_name = 'Мир животных'
         verbose_name_plural = 'Мир животных'
@@ -43,6 +49,8 @@ class Material(models.Model):
         indexes = [
             models.Index(fields=['-time_create'])
         ]
+
+
 
 
 #Модель описывает питомца
@@ -63,12 +71,15 @@ class MyPet(models.Model):
     byaka = models.CharField(blank=True, max_length=500, verbose_name='Что не любит?')
     favorite = models.CharField(blank=True, max_length=500, verbose_name='Что любит?')
 
-
+# название для админ панели
     class Meta:
         verbose_name = 'Мой питомец'
         verbose_name_plural = 'Мои питомцы'
 
 
+
+
+# модель описывает тип постов (один ко многим)
 class TypePost(models.Model):
     name = models.CharField(max_length=70, db_index=True, verbose_name='Тип поста')
     slug = models.SlugField(max_length=70, unique=True, db_index=True)
@@ -76,11 +87,15 @@ class TypePost(models.Model):
     def __str__(self):
         return self.name
 
+# название для админ панели
     class Meta:
         verbose_name = 'Тип поста'
         verbose_name_plural = 'Тип поста'
 
 
+
+
+# Модель описывает теги к постам (присоединяется многие ко многим)
 class TagPosts(models.Model):
     tag = models.CharField(max_length=30, db_index=True, verbose_name='Тег')
     slug = models.SlugField(max_length=70, unique=True, db_index=True)
@@ -88,12 +103,15 @@ class TagPosts(models.Model):
     def __str__(self):
         return self.tag
 
+# название для админ панели
     class Meta:
         verbose_name = 'Тип поста'
         verbose_name_plural = 'Тип поста'
 
 
 
+
+# модель описывает животных (присоединяется один к одному)
 class Animal(models.Model):
     name = models.CharField(max_length=50)
 
@@ -102,7 +120,11 @@ class Animal(models.Model):
 
 
 
+
+# Модель для статики
 class UploadFields(models.Model):
-    file = models.FileField(upload_to='upload_fiel')
+    file = models.FileField(upload_to='upload_field')
+
+
 
 
