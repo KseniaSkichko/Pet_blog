@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% loads static %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+</form>
