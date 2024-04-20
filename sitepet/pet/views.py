@@ -27,7 +27,7 @@ class MaterialTypePost(ListView):
 
     def get_queryset(self):
         return (Material.publication.filter
-                (typepost__slug=self.kwargs['typepost_slag']).
+                (typepost__slug=self.kwargs['typepost_slug']).
                 select_related('typepost'))
 
     def get_context_data(self, **kwargs):
@@ -47,12 +47,12 @@ class MaterialTags(ListView):
 
     def get_queryset(self):
         return (Material.publication.filter
-                (tag__slug=self.kwargs['tag_slag']).
+                (tag__slug=self.kwargs['tag_slug']).
                 select_related('tag'))
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        tags = TagPosts.objects.get(slug=self.kwargs['tags_slag'])
+        tags = TagPosts.objects.get(slug=self.kwargs['tags_slug'])
         context['tags_selected'] = tags.pk
         return context
 

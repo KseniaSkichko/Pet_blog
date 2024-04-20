@@ -11,15 +11,15 @@ urlpatterns = [
     path('nuw', NuwMaterial.as_view(), name='nuw'),
 
 # изменить пост (на страничке с деталями поста)
-    path('update/<slug:slag>/', UpdateMaterial.as_view(), name='update'),
+    path('update/<slug:slug>/', UpdateMaterial.as_view(), name='update'),
 
 # подробная информация поста
-    path('material/<slug:material_slag>/', DetailMaterial.as_view(), name='detail'),
+    path('material/<slug:material_slug>/', DetailMaterial.as_view(), name='detail'),
 
 # разбивает по разным типам
-    path('typepost/<slug:typepost_slag>/', MaterialTypePost.as_view, name='type'),
+    path('typepost/<slug:typepost_slug>/', MaterialTypePost.as_view, name='type'),
 
 # разбивает по тегам
-    path('tags/<slug:tags_slag>/', MaterialTags.as_view(), name='tag'),
+    path('tags/<slug:tags_slug>/', MaterialTags.as_view(), name='tag'),
 ]
 
