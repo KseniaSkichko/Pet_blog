@@ -7,14 +7,17 @@ from .forms import NuwMaterialForm
 from .models import Material, TagPosts, MyPet
 
 
+
+
 # функция страницы со всеми публикациями
 class MaterialHome(ListView):
     context_object_name = 'material'
     template_name = 'pet/materials.html'
+    #model = Material
 
-    def get_queryset(self):
-        return (Material.publication.all().
-                select_related('typepost'))
+    # def get_queryset(self):
+    #     return (Material.objects.all(), {'title': Material.typepost})
+
 
 
 

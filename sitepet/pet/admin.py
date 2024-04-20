@@ -7,7 +7,7 @@ from .models import Material, MyPet, TypePost, TagPosts
 # работа с постами из админа
 @admin.register(Material)
 class MaterialAdmin(admin.ModelAdmin):
-    fields = ['photo_post', 'title', 'slag', 'content',
+    fields = ['photo_post', 'title', 'slug', 'content',
         'typepost', 'tags', 'publication']
     list_display = (
         'photo_post', 'title', 'content',

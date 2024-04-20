@@ -105,8 +105,8 @@ class TagPosts(models.Model):
 
 # название для админ панели
     class Meta:
-        verbose_name = 'Тип поста'
-        verbose_name_plural = 'Тип поста'
+        verbose_name = 'Тег'
+        verbose_name_plural = 'Теги'
 
 
 
