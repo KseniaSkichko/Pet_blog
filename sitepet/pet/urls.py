@@ -5,10 +5,10 @@ from .views import (MaterialHome, MaterialTypePost,
 
 urlpatterns = [
 # все публикации (от всех)
-    path('material', MaterialHome.as_view(), name='material'),
+    path('material/', MaterialHome.as_view(), name='material'),
 
 # на форму для создания новой публикации (сылка на неё на личной страничке с животными)
-    path('nuw', NuwMaterial.as_view(), name='nuw'),
+    path('nuw/', NuwMaterial.as_view(), name='nuw'),
 
 # изменить пост (на страничке с деталями поста)
     path('update/<slug:slug>/', UpdateMaterial.as_view(), name='update'),

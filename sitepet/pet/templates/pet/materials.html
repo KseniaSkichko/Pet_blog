@@ -1,27 +1,20 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-<h1>{{ title }}</h1>
-<body>
-    <p>
-        <h1>{{ material.slug }}</h1>
-<!--        <a href="">Карта</a>-->
-<!--        <p><a href="">Аккаунт</a></p>-->
-    </p>
-    <ul>
+<ul>
         {% for mat in material %}
-        {% if mat.publication %}
             <li>
-                <img src="{{ mat.photo }}">
-                <h2>{{ mat.title }}</h2>
-                <p>{{ mat.content }}</p>
-                <p><a href="{% url 'detail' mat.pk %}">Подробнее</a> </p>
-                {% if not forloop.last %}
-                <hr>
+                <p>Тип: {{ mat.typepost.name }}</p>
+                <p>Дата: {{ mat.time_update|date:"d-m-Y H:i:s" }}</p>
+                {% if mat.photo %}
+                    <p><img src="{{ mat.photo.url }}"></p>
                 {% endif %}
+                <p>{{ mat.title }}</p>
+                {% autoescape off %}
+                <p>{{ mat.content|linebreaks|truncatewords:20 }}</p>
+                {% endautoescape %}
+                <p><a href="{{ mat.get_absolute_url }}">Подробнее</a></p>
             </li>
-        {% endif %}
         {% endfor %}
-    </ul>
-</body>
+</ul>
 {% endblock %}
