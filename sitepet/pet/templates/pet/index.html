@@ -21,7 +21,7 @@
         <p>{{ pos.description|linebreaks|truncatewords:20 }}</p>
         {% endautoescape %}
         <p>{{ pos.age }}</p>
-        <p><a href="{% url 'post' pos.id %}">Смотреть полностью</a></p>
+        <p><a href="{{ pos.get_absolute_url }}">Смотреть полностью</a></p>
         {% if not forloop.last %}
         <hr>
         {% endif %}

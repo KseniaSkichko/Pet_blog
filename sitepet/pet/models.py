@@ -2,15 +2,36 @@ from django.db import models
 from django.urls import reverse, reverse_lazy
 
 
+class PublicationManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(publication=Material.Publiks.PUBLISHED)
+
+
 class Material(models.Model):
+    class Publiks(models.IntegerChoices):
+        PRIVAT = 0, 'Приватно'
+        PUBLISHED = 1, 'Опубликовано'
     title = models.CharField(max_length=255, verbose_name='Заголовок')
     slug = models.SlugField(max_length=70, unique=True, db_index=True, verbose_name='slug')
     content = models.TextField(blank=True, verbose_name='Текст')
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
-    publication = models.BooleanField(default=False)
+    publication = models.BooleanField(choices=Publiks.choices, default=Publiks.PRIVAT)
 
+    objects = models.Manager()
+    publik = PublicationManager()
 
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['-time_create']
+        indexes = [
+            models.Index(fields=['-time_create'])
+        ]
+
+    def get_absolute_url(self):
+         return reverse('post', kwargs={'post_slug': self.slug})
 
 
 

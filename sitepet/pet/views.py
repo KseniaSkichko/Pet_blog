@@ -1,6 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
+from .models import Material
 
 elems_db = [{'id': 1, 'name': 'Статьи'},
             {'id': 2, 'name': 'Смешное'},
@@ -12,14 +13,15 @@ top = [{'title':'Это Я', 'url_name': 'account'},
        {'title':'Карта', 'url_name': 'maps'},
        {'title':'Меню', 'url_name': 'menu'}]
 
-pet = [
-    {'id': 1, 'name': 'Mila', 'description': 'smal, clever, happy', 'age': '1', 'is_pablik': True},
-    {'id': 2, 'name': 'Tosha', 'description': 'average, clever, elderly', 'age': '10', 'is_pablik': False},
-]
+# pet = [
+#     {'id': 1, 'name': 'Mila', 'description': 'smal, clever, happy', 'age': '1', 'is_pablik': True},
+#     {'id': 2, 'name': 'Tosha', 'description': 'average, clever, elderly', 'age': '10', 'is_pablik': False},
+# ]
 def index(request):
+    posts = Material.publik.all()
     context = {'title': 'Интересное и полезное',
                'top': top,
-               'posts': pet,
+               'posts': posts,
                'elem_selected': 0,
                }
     return render(request, 'pet/index.html', context)
@@ -33,8 +35,14 @@ def about(request):
     return render(request, 'pet/about.html', context)
 
 
-def see_post(request, post_id):
-    return HttpResponse(f'Отображение поста: {post_id}')
+def see_post(request, post_slug):
+    post = get_object_or_404(Material, slug=post_slug)
+    context = {'title': post.title,
+               'top': top,
+               'posts': post,
+               'elem_selected': 1,
+               }
+    return render(request, 'pet/post.html', context)
 
 
 def account(request):

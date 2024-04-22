@@ -14,7 +14,7 @@ urlpatterns = [
     path('maps/', maps, name='maps'),
     path('menu/', menu, name='menu'),
     path('mypet/', mypet, name='mypet'),
-    path('post/<int:post_id>/', see_post, name='post'),
+    path('post/<slug:post_slug>/', see_post, name='post'),
     path('element/<int:elem_id>/', see_element, name='element'),
 ]
 
