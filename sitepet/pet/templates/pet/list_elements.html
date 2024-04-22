@@ -1,0 +1,7 @@
+{% for elem in elems %}
+{% if elem.id == elem_selected %}
+<li class="selected">{{ elem.name }}</li>
+{% else %}
+<li><a href="{% url 'element' elem.id %}">{{ elem.name }}</a></li>
+{% endif %}
+{% endfor %}
