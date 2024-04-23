@@ -70,36 +70,38 @@ class TagPost(models.Model):
 class UploadFieles(models.Model):
     file = models.FileField(upload_to='upload_model')
 
-#
-# #Модель описывает питомца
-# class MyPet(models.Model):
-#     name = models.CharField(null=False, blank=False, max_length=50, verbose_name='Имя') #Имя
-#     animal = models.OneToOneField('Animal', on_delete=models.PROTECT,
-#                                   null=False,
-#                                   blank=False, related_name='animal',
-#                                   max_length=50, verbose_name='Вид питомца')
-#     bread = models.CharField(null=True, blank=True, max_length=50, verbose_name='Порода')     #Порода
-#     photo = models.ImageField(upload_to='users/%d/%m/%Y', blank=True,
-#                               null=True, verbose_name='Фотография')
-#     happy_birth = models.DateTimeField(null=True, blank=True,
-#                                        verbose_name='Дата рождения')
-#     character = models.CharField(blank=False, null=False, max_length=500, verbose_name='Характер')
-#     can = models.CharField(blank=False, null=False, max_length=500, verbose_name='Что умеет?')
-#     delicacy = models.CharField(blank=False, null=False, max_length=500, verbose_name='Любимая еда')
-#     byaka = models.CharField(blank=True, max_length=500, verbose_name='Что не любит?')
-#     favorite = models.CharField(blank=True, max_length=500, verbose_name='Что любит?')
-#
-# # название для админ панели
-#     class Meta:
-#         verbose_name = 'Мой питомец'
-#         verbose_name_plural = 'Мои питомцы'
 
 
-#
-#
-# # модель описывает животных (присоединяется один к одному)
-# class Animal(models.Model):
-#     name = models.CharField(max_length=50)
-#
-#     def __str__(self):
-#         return self.name
+class MyPet(models.Model):
+    name = models.CharField(null=False, blank=False, max_length=50, verbose_name='Имя')
+    animal = models.OneToOneField('Animal', on_delete=models.PROTECT,
+                                  null=False,
+                                  blank=False, related_name='animal',
+                                  max_length=50, verbose_name='Вид питомца')
+    bread = models.CharField(null=True, blank=True, max_length=50, verbose_name='Порода')
+    photo = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True,
+                              null=True, verbose_name='Фотография')
+    happy_birth = models.DateTimeField(null=True, blank=True,
+                                       verbose_name='Дата рождения')
+    character = models.CharField(blank=False, null=False, max_length=600, verbose_name='Характер')
+    can = models.CharField(blank=False, null=False, max_length=600, verbose_name='Что умеет?')
+    delicacy = models.CharField(blank=False, null=False, max_length=600, verbose_name='Любимая еда')
+    foo = models.CharField(blank=True, max_length=600, verbose_name='Что не любит?')
+    favorite = models.CharField(blank=True, max_length=600, verbose_name='Что любит?')
+
+    class Meta:
+        verbose_name = 'Мой питомец'
+        verbose_name_plural = 'Мои питомцы'
+
+
+
+
+class Animal(models.Model):
+    name = models.CharField(max_length=50, db_index=True, verbose_name='Животное')
+    slug = models.SlugField(max_length=30, db_index=True, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('animal', kwargs={'animal_slug': self.slug})

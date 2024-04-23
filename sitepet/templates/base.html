@@ -5,19 +5,20 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, intial-scale=1.0">
     <title>{{ title }}</title>
     <link type="text/css" href="{% static 'pet/css/styles.css' %}" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, intial-scale=1.0">
 </head>
 <body>
-<ul>
+<div class="header">
+<ul class="top">
     {% for t in top %}
     <li>
         <a href="{% url t.url_name %}">{{ t.title }}</a>
     </li>
     {% endfor %}
 </ul>
+</div>
 
 <td>
     <ul>

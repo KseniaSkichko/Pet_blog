@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from .models import Material, Element, TagPost
+from .models import Material, Element, TagPost, MyPet, Animal
 
 
 # работа с постами из админа
@@ -64,24 +64,30 @@ class TagPostsAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'tag',)
 
 
-# # зарегистрировали админу возможность управлять классом мои питомцы
-# @admin.register(MyPet)
-# class MyPetAdmin(admin.ModelAdmin):
-#     fields = ['photo_mypet', 'name', 'animal',
-#               'bread', 'happy_birth', 'character',
-#               'can', 'delicacy', 'byaka', 'favorite']
-#     list_display = (
-#         'photo_mypet', 'name', 'bread',
-#         'happy_birth'
-#     )
-#     list_display_links = ('name',)
-#     readonly_fields = ['photo_mypet']
-#
-#
-#     # добавили возможность видеть статику в админе
-#     @admin.display(description='Фотография')
-#     def photo_mypet(self, mypet: MyPet):
-#         if mypet.photo:
-#             return mark_safe(f'<img src="{mypet.photo.url}" width=100>')
-#         return 'Без фото'
-#
+
+@admin.register(MyPet)
+class MyPetAdmin(admin.ModelAdmin):
+    fields = ['photo_mypet', 'name', 'animal',
+              'bread', 'happy_birth', 'character',
+              'can', 'delicacy', 'foo', 'favorite']
+    list_display = (
+        'photo_mypet', 'name', 'bread',
+        'happy_birth'
+    )
+    list_display_links = ('name',)
+    readonly_fields = ['photo_mypet']
+
+    # добавили возможность видеть статику в админе
+    @admin.display(description='Фотография')
+    def photo_mypet(self, mypet: MyPet):
+        if mypet.photo:
+            return mark_safe(f'<img src="{mypet.photo.url}" width=100>')
+        return 'Без фото'
+
+@admin.register(Animal)
+class AnimalAdmin(admin.ModelAdmin):
+    list_display = (
+        'id', 'name',
+    )
+    list_display_links = ('id', 'name',)
+
