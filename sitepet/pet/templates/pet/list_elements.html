@@ -2,6 +2,6 @@
 {% if elem.id == elem_selected %}
 <li class="selected">{{ elem.name }}</li>
 {% else %}
-<li><a href="{% url 'element' elem.id %}">{{ elem.name }}</a></li>
+<li><a href="{{ elem.get_absolute_url }}">{{ elem.name }}</a></li>
 {% endif %}
 {% endfor %}

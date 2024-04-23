@@ -1,11 +1,15 @@
 {% extends 'base.html '%}
-
+{% load static %}
 {% block content %}
+
+
 <h1>{{ post.title }}</h1>
+<p>Категория: {{ post.elem }}</p>
 
 {% if post.photo %}
-<p>
-    <img src="{{ post.photo.url }}">
-</p>
-<p>{{ post.content|linebreaks }}</p>
+<p><img src="{{ post.photo.url }}" width="150"></p>
 {% endif %}
+<p>{{ post.content|linebreaks }}</p>
+<p>Дата: {{ post.time_create|date:'d-m-Y' }}</p>
+
+{% endblock %}

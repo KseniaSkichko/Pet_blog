@@ -1,5 +1,6 @@
 {% load static %}
 {% load pet_tags %}
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -17,6 +18,29 @@
     </li>
     {% endfor %}
 </ul>
+
+<td>
+    <ul>
+        {% if elem_selected == 0 %}
+        <li>Все категории</li>
+        {% else %}
+        <li><a href="{% url 'guests' %}">Все категории</a></li>
+        {% endif %}
+        {% see_elements elem_selected %}
+        <li>{% see_tags %}</li>
+    </ul>
+</td>
+
+{% with post.tags.all as tags %}
+{% if tags %}
+<ul>
+    <li>Теги:</li>
+    {% for tag in tags %}
+    <li><a href="{{ tag.get_absolute_url }}">{{ tag.tag }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
 
 {% block content %}
 {% endblock %}
