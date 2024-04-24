@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
-from .forms import UploadFileForm, NuwMaterialForm
+from .forms import UploadFileForm, NuwMaterialForm, NuwMyPets
 from .models import Material, TagPost, UploadFieles
 
 elems_db = [{'id': 1, 'name': 'Статьи'},
@@ -11,8 +11,7 @@ elems_db = [{'id': 1, 'name': 'Статьи'},
             {'id': 3, 'name': 'Милое'},
             {'id': 4, 'name': 'Коммиксы'},]
 
-top = [{'title': 'Это Я', 'url_name': 'account'},
-       {'title': 'Мои питомцы', 'url_name': 'mypet'},
+top = [{'title': 'Мои питомцы', 'url_name': 'mypet'},
        {'title': 'Карта', 'url_name': 'maps'},
        {'title': 'Меню', 'url_name': 'menu'}]
 
@@ -28,6 +27,17 @@ class MaterialHome(ListView):
 
     def get_queryset(self):
         return Material.publik.all().select_related('elem')
+
+
+class MyPetView(ListView):
+    context_object_name = 'mypets'
+    template_name = 'pet/mypet_list.html'
+    extra_context = {
+        'title': 'Мои питомцы',
+        'top': top,
+    }
+
+
 
 
 def about(request):
@@ -51,6 +61,14 @@ class NuwMaterial(CreateView):
     template_name = 'pet/nuw_post.html'
     extra_context = {
         'title': 'Создать запись',
+        'top': top,
+    }
+
+class NuwMyPet(CreateView):
+    form_class = NuwMyPets
+    template_name = 'pet/nuw_post.html'
+    extra_context = {
+       'title': 'Создать питомца',
         'top': top,
     }
 
@@ -87,8 +105,6 @@ def account(request):
     return HttpResponse('Это Я')
 
 
-def mypet(request):
-    return HttpResponse('Мои питомцы')
 
 
 def maps(request):

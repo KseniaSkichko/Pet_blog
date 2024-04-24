@@ -81,17 +81,25 @@ class MyPet(models.Model):
     bread = models.CharField(null=True, blank=True, max_length=50, verbose_name='Порода')
     photo = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True,
                               null=True, verbose_name='Фотография')
-    happy_birth = models.DateTimeField(null=True, blank=True,
-                                       verbose_name='Дата рождения')
+    happy_birth = models.DateTimeField(verbose_name='Дата рождения')
     character = models.CharField(blank=False, null=False, max_length=600, verbose_name='Характер')
     can = models.CharField(blank=False, null=False, max_length=600, verbose_name='Что умеет?')
     delicacy = models.CharField(blank=False, null=False, max_length=600, verbose_name='Любимая еда')
     foo = models.CharField(blank=True, max_length=600, verbose_name='Что не любит?')
     favorite = models.CharField(blank=True, max_length=600, verbose_name='Что любит?')
+    slug = models.SlugField(max_length=70, unique=True, db_index=True, verbose_name='slug')
+
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         verbose_name = 'Мой питомец'
         verbose_name_plural = 'Мои питомцы'
+        # ordering = ['-time_create']
+        # indexes = [
+        #     models.Index(fields=['-time_create'])
+        # ]
 
 
 

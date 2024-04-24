@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import Element, Material
+from .models import Element, Material, MyPet, Animal
 
 
 # фформа-шаблон для создания нового поста
@@ -26,3 +26,20 @@ class NuwMaterialForm(forms.ModelForm):
 
 class UploadFileForm(forms.Form):
     file = forms.ImageField(label='Файл')
+
+
+class NuwMyPets(forms.ModelForm):
+    animal = forms.ModelChoiceField(queryset=Animal.objects.all(),
+                                    empty_label='Не выбрано', label='Животное')
+
+    class Meta:
+        model = MyPet
+        fields = ['name', 'animal', 'bread', 'slug', 'happy_birth',
+                  'photo', 'character', 'can',
+                  'delicacy', 'foo', 'favorite']
+        labels = {'slug': 'URL'}
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-input'}),
+        }
+
+

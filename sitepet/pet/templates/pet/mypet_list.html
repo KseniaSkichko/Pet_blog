@@ -1,0 +1,66 @@
+{% load static %}
+{% load pet_tags %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <link type="text/css" href="{% static 'pet/css/styles.css' %}" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, intial-scale=1.0">
+</head>
+<body>
+<div class="header">
+<ul class="top">
+    {% for t in top %}
+    <li>
+        <a href="{% url t.url_name %}">{{ t.title }}</a>
+    </li>
+    {% endfor %}
+</ul>
+</div>
+
+{% with post.tags.all as tags %}
+{% if tags %}
+<ul>
+    <li>Теги:</li>
+    {% for tag in tags %}
+    <li><a href="{{ tag.get_absolute_url }}">{{ tag.tag }}</a></li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+
+<h1>{{ title }}</h1>
+<ul>
+    {% for pet in mypets %}
+    <li>
+        {% if pet.photo %}
+        <p><img src="{{ pet.photo.url }}" width="100"></p>
+        {% endif %}
+        <p>{{ pet.name }}</p>
+        <p>{{ pet.animal }}</p>
+
+        {% if pet.bread %}
+        <p>{{ pet.bread }}</p>
+        {% endif %}
+
+        <p>{{ pet.happy_birth }}</p>
+        <p>{{ pet.character }}</p>
+        <p>{{ pet.can }}</p>
+        <p>{{ pet.delicacy }}</p>
+        <p>{{ pet.foo }}</p>
+        <p>{{ pet.favorite }}</p>
+
+        {% if not forloop.last %}
+        <hr>
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+
+
+</body>
+</html>
+
+
