@@ -41,8 +41,6 @@ class Material(models.Model):
             models.Index(fields=['-time_create'])
         ]
 
-    def get_absolute_url(self):
-         return reverse('post', kwargs={'post_slug': self.slug})
 
 
 class Element(models.Model):
@@ -103,10 +101,9 @@ class MyPet(models.Model):
     class Meta:
         verbose_name = 'Мой питомец'
         verbose_name_plural = 'Мои питомцы'
-        # ordering = ['-time_create']
-        # indexes = [
-        #     models.Index(fields=['-time_create'])
-        # ]
+
+    def get_absolute_url(self):
+         return reverse('post', kwargs={'post_slug': self.slug})
 
 
 

@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from .forms import UploadFileForm, NuwMaterialForm, NuwMyPets
-from .models import Material, TagPost, UploadFieles
+from .models import Material, TagPost, UploadFieles, MyPet
 
 elems_db = [{'id': 1, 'name': 'Статьи'},
             {'id': 2, 'name': 'Смешное'},
@@ -36,6 +36,9 @@ class MyPetView(ListView):
         'title': 'Мои питомцы',
         'top': top,
     }
+
+    def get_queryset(self):
+        return MyPet.objects.all().select_related()
 
 
 
@@ -91,10 +94,26 @@ class DetailMaterial(DetailView):
 
 class UpdateMaterial(UpdateView):
     model = Material
-    template_name = 'material/nuw_post.html'
+    template_name = 'pet/nuw_post.html'
     fields = ['elem', 'title',
               'content', 'photo', 'tag', 'publication']
     success_url = reverse_lazy('guests')
+    extra_context = {
+        'title': 'Редактирование',
+        'top': top,
+    }
+
+class UpdateMyPet(UpdateView):
+    slug_url_kwarg = 'mypet_slug'
+    context_object_name = 'mypet'
+    model = Material
+    template_name = 'pet/nuw_pet.html'
+    fields = [
+        'name', 'animal', 'bread',
+        'photo', 'character', 'can',
+        'delicacy', 'foo', 'favorite'
+    ]
+    success_url = reverse_lazy('mypet')
     extra_context = {
         'title': 'Редактирование',
         'top': top,
