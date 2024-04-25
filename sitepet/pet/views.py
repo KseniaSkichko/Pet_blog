@@ -71,7 +71,7 @@ class NuwMyPet(CreateView):
     form_class = NuwMyPets
     template_name = 'pet/nuw_pet.html'
     extra_context = {
-       'title': 'Создать питомца',
+        'title': 'Создать питомца',
         'top': top,
     }
 

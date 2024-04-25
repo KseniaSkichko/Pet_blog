@@ -102,8 +102,8 @@ class MyPet(models.Model):
         verbose_name = 'Мой питомец'
         verbose_name_plural = 'Мои питомцы'
 
-    def get_absolute_url(self):
-         return reverse('post', kwargs={'post_slug': self.slug})
+    # def get_absolute_url(self):
+    #      return reverse('post', kwargs={'post_slug': self.slug})
 
 
 
