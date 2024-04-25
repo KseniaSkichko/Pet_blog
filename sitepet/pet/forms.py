@@ -34,12 +34,12 @@ class NuwMyPets(forms.ModelForm):
 
     class Meta:
         model = MyPet
-        fields = ['name', 'animal', 'bread', 'slug', 'happy_birth',
+        fields = ['name', 'animal', 'bread',
                   'photo', 'character', 'can',
                   'delicacy', 'foo', 'favorite']
-        labels = {'slug': 'URL'}
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-input'}),
+
         }
 
 

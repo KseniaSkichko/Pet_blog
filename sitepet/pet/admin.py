@@ -67,12 +67,11 @@ class TagPostsAdmin(admin.ModelAdmin):
 
 @admin.register(MyPet)
 class MyPetAdmin(admin.ModelAdmin):
-    fields = ['photo_mypet', 'name', 'animal',
-              'bread', 'happy_birth', 'character',
+    fields = ['photo_mypet', 'name', 'animal', 'happy_birth', 'slug',
+              'bread', 'character',
               'can', 'delicacy', 'foo', 'favorite']
     list_display = (
-        'photo_mypet', 'name', 'bread',
-        'happy_birth'
+        'photo_mypet', 'name', 'bread',  'happy_birth', 'slug'
     )
     list_display_links = ('name',)
     readonly_fields = ['photo_mypet']

@@ -1,5 +1,9 @@
+
+
 from django.db import models
+from django.template.defaulttags import now
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
 
 
 class PublicationManager(models.Manager):
@@ -49,8 +53,8 @@ class Element(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Категирия'
         verbose_name_plural = 'Категории'
+        verbose_name = 'Категирия'
 
     def get_absolute_url(self):
         return reverse('element', kwargs={'elem_slug': self.slug})
@@ -73,25 +77,28 @@ class UploadFieles(models.Model):
 
 
 class MyPet(models.Model):
-    name = models.CharField(null=False, blank=False, max_length=50, verbose_name='Имя')
+    name = models.CharField(null=False, blank=False, max_length=50, verbose_name='Имя') #Имя
     animal = models.OneToOneField('Animal', on_delete=models.PROTECT,
                                   null=False,
                                   blank=False, related_name='animal',
                                   max_length=50, verbose_name='Вид питомца')
-    bread = models.CharField(null=True, blank=True, max_length=50, verbose_name='Порода')
-    photo = models.ImageField(upload_to='users/%Y/%m/%d/', blank=True,
+    bread = models.CharField(null=True, blank=True, max_length=50, verbose_name='Порода')     #Порода
+    photo = models.ImageField(upload_to='users/%d/%m/%Y', blank=True,
                               null=True, verbose_name='Фотография')
-    happy_birth = models.DateTimeField(verbose_name='Дата рождения')
-    character = models.CharField(blank=False, null=False, max_length=600, verbose_name='Характер')
-    can = models.CharField(blank=False, null=False, max_length=600, verbose_name='Что умеет?')
-    delicacy = models.CharField(blank=False, null=False, max_length=600, verbose_name='Любимая еда')
-    foo = models.CharField(blank=True, max_length=600, verbose_name='Что не любит?')
-    favorite = models.CharField(blank=True, max_length=600, verbose_name='Что любит?')
-    slug = models.SlugField(max_length=70, unique=True, db_index=True, verbose_name='slug')
+    happy_birth = models.DateTimeField(null=True, blank=True,
+                                       verbose_name='Дата рождения')
+    character = models.CharField(blank=False, null=False, max_length=500, verbose_name='Характер')
+    can = models.CharField(blank=False, null=False, max_length=500, verbose_name='Что умеет?')
+    delicacy = models.CharField(blank=False, null=False, max_length=500, verbose_name='Любимая еда')
+    foo = models.CharField(blank=True, max_length=500, verbose_name='Что не любит?')
+    favorite = models.CharField(blank=True, max_length=500, verbose_name='Что любит?')
+    slug = models.SlugField(max_length=30, db_index=True, unique=True)
+
 
 
     def __str__(self):
         return self.name
+
 
     class Meta:
         verbose_name = 'Мой питомец'
@@ -107,9 +114,6 @@ class MyPet(models.Model):
 class Animal(models.Model):
     name = models.CharField(max_length=50, db_index=True, verbose_name='Животное')
     slug = models.SlugField(max_length=30, db_index=True, unique=True)
-
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        return reverse('animal', kwargs={'animal_slug': self.slug})

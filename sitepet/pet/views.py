@@ -66,7 +66,7 @@ class NuwMaterial(CreateView):
 
 class NuwMyPet(CreateView):
     form_class = NuwMyPets
-    template_name = 'pet/nuw_post.html'
+    template_name = 'pet/nuw_pet.html'
     extra_context = {
        'title': 'Создать питомца',
         'top': top,
