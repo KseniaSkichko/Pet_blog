@@ -1,3 +1,4 @@
+from django.contrib.auth import login
 from django.urls import path
 from .views import (
     MaterialHome, MaterialElement,
@@ -8,6 +9,7 @@ from .views import (
 
 
 urlpatterns = [
+    path('login/', login, name='login'),
     path('', MaterialHome.as_view(), name='guests'),
     path('about/', about, name='about'),
     path('account/', account, name='account'),

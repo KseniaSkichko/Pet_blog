@@ -12,7 +12,7 @@ class MaterialAdmin(admin.ModelAdmin):
         'elem', 'tags', 'publication'
     ]
     list_display = (
-        'title', 'content', 'photo_post',
+        'title', 'content', 'photo_post','photo',
         'elem', 'publication', 'kol_simbol'
     )
     filter_horizontal = ['tags',]
@@ -67,7 +67,7 @@ class TagPostsAdmin(admin.ModelAdmin):
 
 @admin.register(MyPet)
 class MyPetAdmin(admin.ModelAdmin):
-    fields = ['photo_mypet', 'name', 'animal', 'happy_birth', 'slug',
+    fields = ['photo_mypet', 'photo', 'name', 'animal', 'happy_birth', 'slug',
               'bread', 'character',
               'can', 'delicacy', 'foo', 'favorite']
     list_display = (

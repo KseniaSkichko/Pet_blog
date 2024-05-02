@@ -13,6 +13,7 @@ urlpatterns = [
 # начало всех записей
     path('pet/', include('pet.urls')),
     path('__debug__/', include('debug_toolbar.urls')),
+    path('users/', include('users.urls', namespace='users')),
 ]
 
 handler404 = page_does_not_exist
