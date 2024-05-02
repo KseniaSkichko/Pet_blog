@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
@@ -42,7 +44,7 @@ class MyPetView(ListView):
 
 
 
-
+@login_required
 def about(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
@@ -59,7 +61,7 @@ def about(request):
     return render(request, 'pet/about.html', context=context)
 
 
-class NuwMaterial(CreateView):
+class NuwMaterial(LoginRequiredMixin, CreateView):
     form_class = NuwMaterialForm
     template_name = 'pet/nuw_post.html'
     extra_context = {
@@ -67,7 +69,13 @@ class NuwMaterial(CreateView):
         'top': top,
     }
 
-class NuwMyPet(CreateView):
+    def form_valid(self, form):
+        w = form.save(commit=False)
+        w.author = self.request.user
+        return super().form_valid(form)
+
+
+class NuwMyPet(LoginRequiredMixin, CreateView):
     form_class = NuwMyPets
     template_name = 'pet/nuw_pet.html'
     extra_context = {

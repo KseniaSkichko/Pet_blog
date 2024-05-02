@@ -1,5 +1,4 @@
-
-
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.template.defaulttags import now
 from django.urls import reverse, reverse_lazy
@@ -26,6 +25,7 @@ class Material(models.Model):
     elem = models.ForeignKey('Element', on_delete=models.PROTECT, related_name='posts', verbose_name='Категория')
     publication = models.BooleanField(choices=tuple(map(lambda x: (bool(x[0]), x[1]), Publiks.choices)),
                                       default=Publiks.PUBLISHED, verbose_name='Статус')
+    author = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, related_name='posts', null=True, default=None)
 
     objects = models.Manager()
     publik = PublicationManager()
