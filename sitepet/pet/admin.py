@@ -1,21 +1,20 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from .models import Material, Element, TagPost, MyPet, Animal
+from .models import Material, Element, MyPet
 
 
 # работа с постами из админа
 @admin.register(Material)
 class MaterialAdmin(admin.ModelAdmin):
-    list_filter = ('publication', 'elem__name', 'tags__tag')
+    list_filter = ('publication', 'elem__name')
     fields = [
         'title', 'slug', 'content', 'photo_post', 'photo',
-        'elem', 'tags', 'publication'
+        'elem', 'publication'
     ]
     list_display = (
         'title', 'content', 'photo_post','photo',
         'elem', 'publication', 'kol_simbol'
     )
-    filter_horizontal = ['tags',]
     search_fields = ('title__startwith', 'elem__name')
     list_display_links = ('title',)
     ordering = ['-time_create', 'title']
@@ -56,14 +55,6 @@ class ElementAdmin(admin.ModelAdmin):
     list_display_links = ('id', 'name',)
 
 
-@admin.register(TagPost)
-class TagPostsAdmin(admin.ModelAdmin):
-    list_display = (
-        'id', 'tag',
-    )
-    list_display_links = ('id', 'tag',)
-
-
 
 @admin.register(MyPet)
 class MyPetAdmin(admin.ModelAdmin):
@@ -83,10 +74,5 @@ class MyPetAdmin(admin.ModelAdmin):
             return mark_safe(f'<img src="{mypet.photo.url}" width=100>')
         return 'Без фото'
 
-@admin.register(Animal)
-class AnimalAdmin(admin.ModelAdmin):
-    list_display = (
-        'id', 'name',
-    )
-    list_display_links = ('id', 'name',)
+
 

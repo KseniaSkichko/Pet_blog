@@ -3,8 +3,9 @@ from django.urls import path
 from .views import (
     MaterialHome, MaterialElement,
     about, account, maps, menu,
-    MaterialTags, DetailMaterial,
-    NuwMaterial, UpdateMaterial, NuwMyPet, MyPetView, UpdateMyPet
+    DetailMaterial, NuwMaterial,
+    UpdateMaterial, NuwMyPet,
+    MyPetView, UpdateMyPet
 )
 
 
@@ -21,6 +22,5 @@ urlpatterns = [
     path('nuw/', NuwMaterial.as_view(),name='nuw'),
     path('post/<slug:post_slug>/', DetailMaterial.as_view(), name='post'),
     path('element/<slug:elem_slug>/', MaterialElement.as_view(), name='element'),
-    path('tag/<slug:tag_slug>/', MaterialTags.as_view(), name='tag'),
     path('nuwpet/', NuwMyPet.as_view(), name='nuwpet'),
 ]

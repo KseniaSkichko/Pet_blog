@@ -1,8 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.template.defaulttags import now
-from django.urls import reverse, reverse_lazy
-from django.utils import timezone
+from django.urls import reverse
 
 
 class PublicationManager(models.Manager):
@@ -21,7 +19,6 @@ class Material(models.Model):
     content = models.TextField(blank=True, verbose_name='Текст')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     time_update = models.DateTimeField(auto_now=True, verbose_name='Время последнего редактирования')
-    tags = models.ManyToManyField('TagPost', blank=True, related_name='tags', verbose_name='Теги')
     elem = models.ForeignKey('Element', on_delete=models.PROTECT, related_name='posts', verbose_name='Категория')
     publication = models.BooleanField(choices=tuple(map(lambda x: (bool(x[0]), x[1]), Publiks.choices)),
                                       default=Publiks.PUBLISHED, verbose_name='Статус')
@@ -41,7 +38,8 @@ class Material(models.Model):
             models.Index(fields=['-time_create'])
         ]
 
-
+    def get_absolute_url(self):
+       return reverse('post', kwargs={'post_slug': self.slug})
 
 class Element(models.Model):
     name = models.CharField(max_length=100, db_index=True, verbose_name='Категория')
@@ -58,15 +56,6 @@ class Element(models.Model):
         return reverse('element', kwargs={'elem_slug': self.slug})
 
 
-class TagPost(models.Model):
-    tag = models.CharField(max_length=30, db_index=True, verbose_name='Тег')
-    slug = models.SlugField(max_length=30, db_index=True, unique=True)
-
-    def __str__(self):
-        return self.tag
-
-    def get_absolute_url(self):
-        return reverse('tag', kwargs={'tag_slug': self.slug})
 
 
 class UploadFieles(models.Model):
@@ -76,10 +65,7 @@ class UploadFieles(models.Model):
 
 class MyPet(models.Model):
     name = models.CharField(null=False, blank=False, max_length=50, verbose_name='Имя') #Имя
-    animal = models.OneToOneField('Animal', on_delete=models.PROTECT,
-                                  null=False,
-                                  blank=False, related_name='animal',
-                                  max_length=50, verbose_name='Вид питомца')
+    animal = models.CharField(null=False, blank=False, max_length=50, verbose_name='Вид животного')
     bread = models.CharField(null=True, blank=True, max_length=50, verbose_name='Порода')     #Порода
     photo = models.ImageField(upload_to='users/%d/%m/%Y', blank=True,
                               null=True, verbose_name='Фотография')
@@ -107,10 +93,4 @@ class MyPet(models.Model):
 
 
 
-
-class Animal(models.Model):
-    name = models.CharField(max_length=50, db_index=True, verbose_name='Животное')
-    slug = models.SlugField(max_length=30, db_index=True, unique=True)
-    def __str__(self):
-        return self.name
 

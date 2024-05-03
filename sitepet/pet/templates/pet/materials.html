@@ -1,17 +1,8 @@
-{% extends 'base.html'%}
+{% extends 'pet/base.html'%}
 {% load static %}
 {% block content %}
 
-{% with post.tags.all as tags %}
-{% if tags %}
-<ul>
-    <li>Теги:</li>
-    {% for tag in tags %}
-    <li><a href="{{ tag.get_absolute_url }}">{{ tag.tag }}</a></li>
-    {% endfor %}
-</ul>
-{% endif %}
-{% endwith %}
+
 
 <h1>{{ title }}</h1>
 <ul>

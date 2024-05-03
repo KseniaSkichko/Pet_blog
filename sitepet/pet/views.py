@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from .forms import UploadFileForm, NuwMaterialForm, NuwMyPets
-from .models import Material, TagPost, UploadFieles, MyPet
+from .models import Material, UploadFieles, MyPet
 
 elems_db = [{'id': 1, 'name': 'Статьи'},
             {'id': 2, 'name': 'Смешное'},
@@ -85,6 +85,7 @@ class NuwMyPet(LoginRequiredMixin, CreateView):
 
 
 class DetailMaterial(DetailView):
+    model = Material
     template_name = 'pet/post.html'
     slug_url_kwarg = 'post_slug'
     context_object_name = 'post'
@@ -104,7 +105,7 @@ class UpdateMaterial(UpdateView):
     model = Material
     template_name = 'pet/nuw_post.html'
     fields = ['elem', 'title',
-              'content', 'photo', 'tag', 'publication']
+              'content', 'photo', 'publication']
     success_url = reverse_lazy('guests')
     extra_context = {
         'title': 'Редактирование',
@@ -161,25 +162,6 @@ class MaterialElement(ListView):
         return context
 
 
-
-
-class MaterialTags(ListView):
-    template_name = 'pet/materials.html'
-    context_object_name = 'posts'
-    allow_empty = False
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        tag = TagPost.objects.get(slug=self.kwargs['tag_slug'])
-        context['title'] = 'Тег: ' + tag.tag
-        context['top'] = top
-        context['elem_selected'] = None
-        return context
-
-    def get_queryset(self):
-        return (Material.publik.filter
-                (tags__slug=self.kwargs['tag_slug']).
-                select_related('elem'))
 
 
 def page_does_not_exist(request, exception):
