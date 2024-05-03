@@ -21,6 +21,7 @@ class NuwMaterialForm(forms.ModelForm):
         title = self.cleaned_data['title']
         if len(title) > 50:
             raise ValidationError("Длина превышает 50 символов")
+        return title
 
 
 class UploadFileForm(forms.Form):
