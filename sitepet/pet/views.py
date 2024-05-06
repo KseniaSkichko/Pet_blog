@@ -113,7 +113,7 @@ class UpdateMaterial(UpdateView):
     }
 
 class UpdateMyPet(UpdateView):
-    slug_url_kwarg = 'mypet_slug'
+    slug_url_kwarg = 'pet_slug'
     context_object_name = 'mypet'
     model = Material
     template_name = 'pet/nuw_pet.html'

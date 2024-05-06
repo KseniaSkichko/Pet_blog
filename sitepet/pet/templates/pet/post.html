@@ -11,5 +11,6 @@
 {% endif %}
 <p>{{ post.content|linebreaks }}</p>
 <p>Дата: {{ post.time_create|date:'d-m-Y' }}</p>
+<p><a href="{% url 'updatmat' post.slug %}">Редактировать</a></p>
 
 {% endblock %}

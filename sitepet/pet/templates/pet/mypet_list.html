@@ -1,5 +1,4 @@
 {% load static %}
-{% load pet_tags %}
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -46,7 +45,7 @@
         <p>Любимая еда - {{ pet.delicacy }}</p>
         <p>Очень не любит {{ pet.foo }}</p>
         <p>Любит {{ pet.favorite }}</p>
-
+        <p><a href="{{ pet.get_absolute_url }}">Изменить</a></p>
         {% if not forloop.last %}
         <hr>
         {% endif %}
