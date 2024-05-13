@@ -10,11 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<div class="header">
-<ul class="top">
+<div class="div-1">
+<ul>
     {% for t in top %}
-    <li   class="heder">
-        <a href="{% url t.url_name %}">{{ t.title }}</a>
+    <li class="heder">
+            <a href="{% url t.url_name %}" style="text-decoration: none;">{{ t.title }}</a>
     </li>
     {% endfor %}
 </ul>
