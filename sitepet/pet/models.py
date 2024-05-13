@@ -92,6 +92,3 @@ class MyPet(models.Model):
         return reverse('pet', kwargs={'updatpet_slug': self.slug})
 
 
-
-
-# % url 'updatpet' pet.slug }

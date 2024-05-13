@@ -6,14 +6,14 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ title }}</title>
-    <link type="text/css" href="{% static 'pet/css/styles.css' %}" rel="stylesheet" />
-    <meta name="viewport" content="width=device-width, intial-scale=1.0">
+    <link type="text/css" href="{% static 'css/pet/styles.css' %}" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <div class="header">
 <ul class="top">
     {% for t in top %}
-    <li>
+    <li   class="heder">
         <a href="{% url t.url_name %}">{{ t.title }}</a>
     </li>
     {% endfor %}
@@ -34,6 +34,7 @@
 
 {% block content %}
 {% endblock %}
+
 
 </body>
 </html>
